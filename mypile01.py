@@ -78,4 +78,39 @@ for i in range(numNodal):
     gammaI.append(round(tempGammaI, 2))
 
 
+# fungsi untuk menghitung nilai epsilon50
+def epsilon50(valCu):
+    if valCu <= 48.0:
+        epsilon50 = 0.02
+    elif valCu > 48.0 and valCu < 96.0:
+        epsilon50 = 0.01
+    else:
+        epsilon50 = 0.005
+    return epsilon50
+
+
+# fungsi untuk menghitung nilai y50
+def y50(valEpsilon50):
+    return (2.5 * valEpsilon50 * diameter)
+
+
+# fungsi untuk menghitung nilai pult1
+def pult1(valGamma, valDepth, valCu):
+    return ((3.0 + (valGamma * valDepth / valCu) + (constJ * valDepth / diameter)) * valCu * diameter)
+
+
+# fungsi untuk menghitung nilai pult2
+def pult2(valCu):
+    return (9.0 * valCu * diameter)
+
+# fungsi untuk menghitung nilai Pu
+def valPu(valPult1, valPult2):
+    return min(valPult1, valPult2)
+
+
+
+
+
+
+# def valPu(valY, valPu, valY50):
 
