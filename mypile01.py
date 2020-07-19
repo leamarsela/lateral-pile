@@ -4,6 +4,9 @@
 
 from math import pi
 import numpy as np
+from scipy import stats
+from operator import truediv
+
 
 #input
 diameter = 0.5
@@ -94,23 +97,28 @@ def y50(valEpsilon50):
     return (2.5 * valEpsilon50 * diameter)
 
 
-# fungsi untuk menghitung nilai pult1
-def pult1(valGamma, valDepth, valCu):
-    return ((3.0 + (valGamma * valDepth / valCu) + (constJ * valDepth / diameter)) * valCu * diameter)
-
-
-# fungsi untuk menghitung nilai pult2
-def pult2(valCu):
-    return (9.0 * valCu * diameter)
-
 # fungsi untuk menghitung nilai Pu
-def valPu(valPult1, valPult2):
-    return min(valPult1, valPult2)
+def valPu(valGamma, valDepth, valCu):
+    return min(((3.0 + (valGamma * valDepth / valCu) + (constJ * valDepth / diameter)) * valCu * diameter), 9.0 * valCu * diameter)
+
+# fungsi untuk menghitung nilai P
+def valP(valY, valPu, valY50):
+    return (0.5 * valPu * (valY / valY50)**(1 / 3))
+    
+
+# fungsi untuk menghitung nilai Ei dan Pult
+def valEiPult(valY, valP):
+    x = np.array([valY, valP])
+    r = stats.linregress(x)
+
+    return (1/r.intercept), (1/r.slope)
 
 
 
 
 
 
-# def valPu(valY, valPu, valY50):
+
+
+
 
